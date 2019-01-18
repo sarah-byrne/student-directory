@@ -24,6 +24,12 @@ def print(students)
   end
 end
 
+def print_students_with_initial(students, initial)
+  students.select {|s| s[:name].start_with?(initial)}.each do |student|
+    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  end
+end
+
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
@@ -52,3 +58,4 @@ students = input_students
 print_header
 print(students)
 print_footer(students)
+print_students_with_initial(students, "t")
