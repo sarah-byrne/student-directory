@@ -32,11 +32,11 @@ def print(students, initial, max)
   while i < students.length do
     if students[i][:name].start_with?(initial) && students[i][:name].length < max
       puts "#{i+1}.".center(4) +
-            "#{students[i][:name]}".center(12) +
-            "#{students[i][:cohort]}".center(10) +
-            "#{students[i][:hobby]}".center(11) +
+            "#{students[i][:name].capitalize}".center(12) +
+            "#{students[i][:cohort].capitalize}".center(10) +
+            "#{students[i][:hobby].capitalize}".center(11) +
             "#{students[i][:height]}".center(8) +
-            "#{students[i][:country]}".center(9)
+            "#{students[i][:country].capitalize}".center(9)
     end
     i += 1
   end
