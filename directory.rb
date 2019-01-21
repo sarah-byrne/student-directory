@@ -55,7 +55,9 @@ end
 #  end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  puts students.count == 1 ?
+    "Overall, we have 1 great student" :
+    "Overall, we have #{students.count} great students"
 end
 
 def random_height
