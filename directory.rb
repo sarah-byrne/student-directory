@@ -19,8 +19,15 @@ def print_header
 end
 
 def print(students, initial, max)
-  students.select {|s| s[:name].start_with?(initial) && s[:name].length < max}.each_with_index do |student, i|
-    puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)"
+#  students.select {|s| s[:name].start_with?(initial) && s[:name].length < max}.each_with_index do |student, i|
+#    puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)"
+#  end
+  i = 0
+  while i < students.length do
+    if students[i][:name].start_with?(initial) && students[i][:name].length < max
+      puts "#{i+1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)"
+    end
+    i += 1
   end
 end
 
