@@ -71,6 +71,12 @@ def random_hobby
 end
 
 def input_students
+  cohorts = {:january => "january", :february => "february", :march => "march",
+    :april => "april", :may => "may", :june => "june", :july => "july",
+    :august => "august", :september => "september", :october => "october",
+    :november => "november", :december => "december"}
+  default_cohort = :november
+
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   # create an empty array
@@ -79,8 +85,16 @@ def input_students
   name = gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
+    # ask for cohort and validate response
+    puts "Which cohort is this student in?"
+    cohort = gets.chomp.downcase
+
+    cohort_sym = cohorts.key(cohort)
+    if cohort_sym == nil
+      cohort_sym = default_cohort
+    end
     # add the student hash to the array
-    students << {name: name, cohort: :november,
+    students << {name: name, cohort: cohort_sym,
                 hobby: random_hobby, height: random_height,
                 country: "UK"}
     puts "Now we have #{students.count} students"
