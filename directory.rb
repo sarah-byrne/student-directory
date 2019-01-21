@@ -112,7 +112,8 @@ end
 
 # nothing happens until we call the methods
 students = input_students
-print_header
-print(students, "t", 12)
-print_footer(students)
-# print_if_initial(students, "t")
+if students.length > 0
+  print_header
+  print(students, "t", 12)
+  print_footer(students)
+end
