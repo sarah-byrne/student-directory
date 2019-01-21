@@ -88,7 +88,7 @@ def input_students
   # create an empty array
   students = []
   # get the first name
-  name = gets.chomp
+  name = gets.delete_suffix("\n")
   # while the name is not empty, repeat this code
   while !name.empty? do
     # ask for cohort and validate response
