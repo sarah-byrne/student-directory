@@ -18,17 +18,23 @@ def print_header
   puts "---------------"
 end
 
-def print(students)
-  students.each_with_index do |student, i|
+def print(students, initial, max)
+  students.select {|s| s[:name].start_with?(initial) && s[:name].length < max}.each_with_index do |student, i|
     puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
-def print_students_with_initial(students, initial)
-  students.select {|s| s[:name].start_with?(initial)}.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
-  end
-end
+#  def print_if_initial(students, initial)
+#    students.select {|s| s[:name].start_with?(initial)}.each do |student|
+#      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+#    end
+#  end
+#
+#  def print_if_name_shorter_than(students, max)
+#    students.select {|s| s[:name].length < max}.each do |student|
+#      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+#    end
+#  end
 
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
@@ -56,6 +62,6 @@ end
 # nothing happens until we call the methods
 students = input_students
 print_header
-print(students)
+print(students, "t", 12)
 print_footer(students)
-print_students_with_initial(students, "t")
+# print_if_initial(students, "t")
