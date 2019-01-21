@@ -15,7 +15,13 @@
 
 def print_header
   puts "The students of Villains Academy"
-  puts "---------------"
+  puts "--------------------------------"
+  puts "No.".center(4) +
+        "Name".center(12) +
+        "Cohort".center(10) +
+        "Hobby".center(11) +
+        "Height".center(8) +
+        "Country".center(9)
 end
 
 def print(students, initial, max)
@@ -25,9 +31,12 @@ def print(students, initial, max)
   i = 0
   while i < students.length do
     if students[i][:name].start_with?(initial) && students[i][:name].length < max
-      puts "#{i+1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)
-        Hobby: #{students[i][:hobby]} Height: #{students[i][:height]}
-        Country: #{students[i][:country]}"
+      puts "#{i+1}.".center(4) +
+            "#{students[i][:name]}".center(12) +
+            "#{students[i][:cohort]}".center(10) +
+            "#{students[i][:hobby]}".center(11) +
+            "#{students[i][:height]}".center(8) +
+            "#{students[i][:country]}".center(9)
     end
     i += 1
   end
