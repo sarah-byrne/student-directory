@@ -13,6 +13,13 @@
 #   {name: "Norman Bates", cohort: :november}
 # ]
 
+$cohorts = [:january, :february, :march,
+          :april, :may, :june,  :july,
+          :august, :september,  :october,
+          :november,  :december]
+
+$default_cohort = :november
+
 def print_header
   puts "The students of Villains Academy"
   puts "--------------------------------"
@@ -24,21 +31,26 @@ def print_header
         "Country".center(9)
 end
 
-def print(students, initial, max)
+def print(all_students, initial, max)
 #  students.select {|s| s[:name].start_with?(initial) && s[:name].length < max}.each_with_index do |student, i|
 #    puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)"
 #  end
-  i = 0
-  while i < students.length do
-    if students[i][:name].start_with?(initial) && students[i][:name].length < max
-      puts "#{i+1}.".center(4) +
-            "#{students[i][:name].capitalize}".center(12) +
-            "#{students[i][:cohort].capitalize}".center(10) +
-            "#{students[i][:hobby].capitalize}".center(11) +
-            "#{students[i][:height]}".center(8) +
-            "#{students[i][:country].capitalize}".center(9)
+  counter = 1
+  $cohorts.each do |cohort|
+    students = all_students.select {|s| s[:cohort] == cohort}
+    i = 0
+    while i < students.length do
+      if students[i][:name].start_with?(initial) && students[i][:name].length < max
+        puts "#{counter}.".center(4) +
+              "#{students[i][:name].capitalize}".center(12) +
+              "#{students[i][:cohort].capitalize}".center(10) +
+              "#{students[i][:hobby].capitalize}".center(11) +
+              "#{students[i][:height]}".center(8) +
+              "#{students[i][:country].capitalize}".center(9)
+      end
+      i += 1
+      counter += 1
     end
-    i += 1
   end
 end
 
@@ -71,12 +83,6 @@ def random_hobby
 end
 
 def input_students
-  cohorts = {:january => "january", :february => "february", :march => "march",
-    :april => "april", :may => "may", :june => "june", :july => "july",
-    :august => "august", :september => "september", :october => "october",
-    :november => "november", :december => "december"}
-  default_cohort = :november
-
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   # create an empty array
@@ -87,14 +93,13 @@ def input_students
   while !name.empty? do
     # ask for cohort and validate response
     puts "Which cohort is this student in?"
-    cohort = gets.chomp.downcase
+    cohort = gets.chomp.downcase.to_sym
 
-    cohort_sym = cohorts.key(cohort)
-    if cohort_sym == nil
-      cohort_sym = default_cohort
+    if $cohorts.include?(cohort) == false
+      cohort = $default_cohort
     end
     # add the student hash to the array
-    students << {name: name, cohort: cohort_sym,
+    students << {name: name, cohort: cohort,
                 hobby: random_hobby, height: random_height,
                 country: "UK"}
     puts "Now we have #{students.count} students"
