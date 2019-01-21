@@ -25,7 +25,9 @@ def print(students, initial, max)
   i = 0
   while i < students.length do
     if students[i][:name].start_with?(initial) && students[i][:name].length < max
-      puts "#{i+1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)"
+      puts "#{i+1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)
+        Hobby: #{students[i][:hobby]} Height: #{students[i][:height]}
+        Country: #{students[i][:country]}"
     end
     i += 1
   end
@@ -47,6 +49,16 @@ def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
 
+def random_height
+  heights = ["5ft 2in", "5ft 6in", "5ft 9in", "6ft 1in"]
+  return heights[rand(4)]
+end
+
+def random_hobby
+  hobbys = ["Reading", "Football", "Swimming", "Music"]
+  return hobbys[rand(4)]
+end
+
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -57,7 +69,9 @@ def input_students
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    students << {name: name, cohort: :november}
+    students << {name: name, cohort: :november,
+                hobby: random_hobby, height: random_height,
+                country: "UK"}
     puts "Now we have #{students.count} students"
     # get another name from the user
     name = gets.chomp
