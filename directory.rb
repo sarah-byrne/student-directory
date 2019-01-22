@@ -32,28 +32,46 @@ def print_header
         "Country".center(9)
 end
 
-def print_students_list(initial, max)
-#  students.select {|s| s[:name].start_with?(initial) && s[:name].length < max}.each_with_index do |student, i|
-#    puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)"
-#  end
+def print_students_list
   counter = 1
   $cohorts.each do |cohort|
     students = @students.select {|s| s[:cohort] == cohort}
     i = 0
     while i < students.length do
-      if students[i][:name].start_with?(initial) && students[i][:name].length < max
-        puts "#{counter}.".center(4) +
-              "#{students[i][:name].capitalize}".center(12) +
-              "#{students[i][:cohort].capitalize}".center(10) +
-              "#{students[i][:hobby].capitalize}".center(11) +
-              "#{students[i][:height]}".center(8) +
-              "#{students[i][:country].capitalize}".center(9)
-      end
+      puts "#{counter}.".center(4) +
+            "#{students[i][:name].capitalize}".center(12) +
+            "#{students[i][:cohort].capitalize}".center(10) +
+            "#{students[i][:hobby].capitalize}".center(11) +
+            "#{students[i][:height]}".center(8) +
+            "#{students[i][:country].capitalize}".center(9)
       i += 1
       counter += 1
     end
   end
 end
+
+#  def print_students_list(initial, max)
+#  #  students.select {|s| s[:name].start_with?(initial) && s[:name].length < max}.each_with_index do |student, i|
+#  #    puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)"
+#  #  end
+#    counter = 1
+#    $cohorts.each do |cohort|
+#      students = @students.select {|s| s[:cohort] == cohort}
+#      i = 0
+#      while i < students.length do
+#        if students[i][:name].start_with?(initial) && students[i][:name].length < max
+#          puts "#{counter}.".center(4) +
+#                "#{students[i][:name].capitalize}".center(12) +
+#                "#{students[i][:cohort].capitalize}".center(10) +
+#                "#{students[i][:hobby].capitalize}".center(11) +
+#                "#{students[i][:height]}".center(8) +
+#                "#{students[i][:country].capitalize}".center(9)
+#        end
+#        i += 1
+#        counter += 1
+#      end
+#    end
+#  end
 
 #  def print_if_initial(students, initial)
 #    students.select {|s| s[:name].start_with?(initial)}.each do |student|
@@ -115,7 +133,7 @@ end
 
 def show_students
   print_header
-  print_students_list("t", 12)
+  print_students_list
   print_footer
 end
 
