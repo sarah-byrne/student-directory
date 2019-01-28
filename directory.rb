@@ -1,17 +1,4 @@
-# let's put all students into an array
-# students = [
-#   {name: "Dr. Hannibal Lecter", cohort: :november},
-#   {name: "Darth Vader", cohort: :november},
-#   {name: "Nurse Ratched", cohort: :november},
-#   {name: "Michael Corleone", cohort: :november},
-#   {name: "Alex DeLarge", cohort: :november},
-#   {name: "The Wicked Witch of the West", cohort: :november},
-#   {name: "Terminator", cohort: :november},
-#   {name: "Freddy Krueger", cohort: :november},
-#   {name: "The Joker", cohort: :november},
-#   {name: "Joffrey Baratheon", cohort: :november},
-#   {name: "Norman Bates", cohort: :november}
-# ]
+
 @students = [] # an empty array accessible to all methods
 
 $cohorts = [:january, :february, :march,
@@ -50,41 +37,6 @@ def print_students_list
   end
 end
 
-#  def print_students_list(initial, max)
-#  #  students.select {|s| s[:name].start_with?(initial) && s[:name].length < max}.each_with_index do |student, i|
-#  #    puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)"
-#  #  end
-#    counter = 1
-#    $cohorts.each do |cohort|
-#      students = @students.select {|s| s[:cohort] == cohort}
-#      i = 0
-#      while i < students.length do
-#        if students[i][:name].start_with?(initial) && students[i][:name].length < max
-#          puts "#{counter}.".center(4) +
-#                "#{students[i][:name].capitalize}".center(12) +
-#                "#{students[i][:cohort].capitalize}".center(10) +
-#                "#{students[i][:hobby].capitalize}".center(11) +
-#                "#{students[i][:height]}".center(8) +
-#                "#{students[i][:country].capitalize}".center(9)
-#        end
-#        i += 1
-#        counter += 1
-#      end
-#    end
-#  end
-
-#  def print_if_initial(students, initial)
-#    students.select {|s| s[:name].start_with?(initial)}.each do |student|
-#      puts "#{student[:name]} (#{student[:cohort]} cohort)"
-#    end
-#  end
-#
-#  def print_if_name_shorter_than(students, max)
-#    students.select {|s| s[:name].length < max}.each do |student|
-#      puts "#{student[:name]} (#{student[:cohort]} cohort)"
-#    end
-#  end
-
 def print_footer
   puts @students.count == 1 ?
     "Overall, we have 1 great student" :
@@ -93,12 +45,12 @@ end
 
 def random_height
   heights = ["5ft 2in", "5ft 6in", "5ft 9in", "6ft 1in"]
-  return heights[rand(4)]
+  return heights[rand(4)].to_sym
 end
 
 def random_hobby
   hobbys = ["Reading", "Football", "Swimming", "Music"]
-  return hobbys[rand(4)]
+  return hobbys[rand(4)].to_sym
 end
 
 def input_students
@@ -116,13 +68,17 @@ def input_students
       cohort = $default_cohort
     end
     # add the student hash to the array
-    @students << {name: name, cohort: cohort,
-                hobby: random_hobby, height: random_height,
-                country: "UK"}
+    add_student(name, cohort, random_hobby, random_height, "UK")
     puts "Now we have #{@students.count} students"
     # get another name from the user
     name = STDIN.gets.chomp
   end
+end
+
+def add_student(name, cohort, hobby, height, country)
+  @students << {name: name, cohort: cohort,
+              hobby: hobby, height: height,
+              country: "UK"}
 end
 
 def print_menu
@@ -167,28 +123,34 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "#{@students.count} students have been saved to students.csv"
 end
 
 def load_students(filename = "students.csv")
+  count = 0
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, hobby, height, country = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym,
-                  hobby: hobby.to_sym, height: height.to_sym,
-                  country: country.to_sym}
+    add_student(name, cohort.to_sym, hobby.to_sym, height.to_sym, country.to_sym)
+    count += 1
   end
+  puts "Loaded #{count} students from #{filename}"
   file.close
 end
 
-def try_load_students
+def initial_load_students
   filename = ARGV.first
-  return if filename.nil?
-  if File.exists?(filename)
-    load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
+  if filename.nil?
+    load_students
+    # puts "Loaded #{@students.count} from default file"
   else
-    puts "Sorry, #{filename} doesn't exist"
-    exit # quit the program
+    if File.exists?(filename)
+      load_students(filename)
+      # puts "Loaded #{@students.count} from #{filename}"
+    else
+      puts "Sorry, #{filename} doesn't exist"
+      exit # quit the program
+    end
   end
 end
 
@@ -199,13 +161,5 @@ def interactive_menu
   end
 end
 
-try_load_students
+initial_load_students
 interactive_menu
-
-# nothing happens until we call the methods
-#  students = input_students
-#  if students.length > 0
-#    print_header
-#    print(students, "t", 12)
-#    print_footer(students)
-#  end
